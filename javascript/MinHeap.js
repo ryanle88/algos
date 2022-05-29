@@ -24,11 +24,29 @@ class MinHeap {
     }
     
     siftUp(heap, idx) {
-        
+        while (idx>0) {
+            let parentIdx = this._parentIdx(idx);
+            if (this.isSmallerThan(idx, parentIdx)) {
+                this.swap(idx, parentIdx);
+                idx = parentIdx;
+            } else break;
+        }
     }
     
     siftDown(heap, idx, end) {
-        
+        while (idx<end) {
+            let leftIdx = this._leftIdx(idx);
+            let rightIdx = this._rightIdx(idx);
+            if ((leftIdx<=end && this.isSmallerThan(leftIdx, idx)) ||
+               (rightIdx<=end && this.isSmallerThan(rightIdx, idx))) {
+                let idxToSwap = leftIdx;
+                if (rightIdx<=end && this.isSmallerThan(rightIdx, leftIdx)) {
+                    idxToSwap = rightIdx;
+                }
+                this.swap(idx, idxToSwap);
+                idx = idxToSwap;
+            } else break;
+        }
     }
     
     isSmallerThan(i, j) {
